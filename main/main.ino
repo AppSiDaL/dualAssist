@@ -154,7 +154,7 @@ void loop() {
     http.begin("https://dualassist.onrender.com/"); //Specify the URL
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    String httpRequestData = "lastName=" + lastName + "&time=" + String(millis());
+    String httpRequestData = "lastName=" + lastName);
     int httpResponseCode = http.POST(httpRequestData);
 
     if (httpResponseCode>0) {
