@@ -1,42 +1,58 @@
 # main.py
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
-
-load_dotenv()  # take environment variables from .env.
 from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import datetime
+import psycopg2
+
+load_dotenv()  # take environment variables from .env.
+
 
 class Item(BaseModel):
     lastname: str
 
+
+def conectar_bd():
+    # Establecemos la conexión con la base de datos PostgreSQL
+    cnx = psycopg2.connect(
+        host=os.environ.get("DB_HOST"),
+        port=os.environ.get("DB_PORT"),
+        database=os.environ.get("DB_NAME"),
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASSWORD"),
+    )
+    return cnx
+
+
 app = FastAPI()
-DATABASE_URL = os.getenv("DB_URL")
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+HOST = os.getenv("HOST")
+USER = os.getenv("USER")
+PASSWORD = os.getenv("PASSWORD")
+PORT = os.getenv("PORT")
+DATABASE = os.getenv("DATABASE")
 
-Base = declarative_base()
 
-class Asistencia(Base):
-    __tablename__ = "asistencia"
-
-    id = Column(Integer, primary_key=True, index=True)
-    numeroControl = Column(String)
-    time = Column(DateTime)
-
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 @app.post("/")
 async def root(item: Item):
-    current_time = datetime.now()
-    asistencia = Asistencia(numeroControl=item.lastname, time=current_time)
-    session = SessionLocal()
-    session.add(asistencia)
-    session.commit()
-    session.refresh(asistencia)
-    return {
-        "numeroControl": asistencia.numeroControl,
-        "time": asistencia.time.isoformat()
-    }
+    current_time = datetime.now().isoformat()
+
+    insertar_datos(item.lastname, current_time)
+    return {"numeroControl": item.lastname, "time": current_time}
+
+
+def insertar_datos(numeroControl, time):
+    conexion = conectar_bd()
+    cursor = conexion.cursor()
+    insert_query = "INSERT INTO asistencia VALUES (%s, %s, %s)"
+    cursor.execute(
+        insert_query,
+        (
+            "1",
+            numeroControl,
+            time,
+        ),
+    )
+    conexion.commit()
+    cursor.close()
+    conexion.close()
