@@ -45,7 +45,7 @@ async def root(item: Item):
 def insertar_datos(numeroControl, time):
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    insert_query = "INSERT INTO asistencia VALUES (%s, %s, %s)"
+    insert_query = "INSERT INTO asistencia VALUES (%s, %s)"
     cursor.execute(
         insert_query,
         (
