@@ -37,6 +37,7 @@ DATABASE = os.getenv("DATABASE")
 async def root(item: Item):
     current_time = datetime.now().isoformat()
     numeroControl = item.lastname.strip()
+    print(numeroControl)
     insertar_datos(numeroControl, current_time)
     return {"numeroControl": numeroControl, "time": current_time}
 
