@@ -36,9 +36,9 @@ DATABASE = os.getenv("DATABASE")
 @app.post("/")
 async def root(item: Item):
     current_time = datetime.now().isoformat()
-
-    insertar_datos(item.lastname, current_time)
-    return {"numeroControl": item.lastname, "time": current_time}
+    numeroControl = item.lastname.strip()
+    insertar_datos(numeroControl, current_time)
+    return {"numeroControl": numeroControl, "time": current_time}
 
 
 def insertar_datos(numeroControl, time):
@@ -48,7 +48,6 @@ def insertar_datos(numeroControl, time):
     cursor.execute(
         insert_query,
         (
-            "1",
             numeroControl,
             time,
         ),

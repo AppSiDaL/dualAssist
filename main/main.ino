@@ -36,7 +36,7 @@ void setup() {
   mfrc522.PCD_Init();                                              // Init MFRC522 card
   // ...
   
-  WiFi.begin("IP15PM", "papas123");
+  WiFi.begin("Sala 2_ISC", "taquitosdebarbacha");
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.println("Connecting to WiFi...");
@@ -152,9 +152,8 @@ void loop() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     http.begin("https://dualassist.onrender.com/"); //Specify the URL
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    String httpRequestData = "lastName=" + lastName);
+    http.addHeader("Content-Type", "application/json");
+    String httpRequestData = "{\"lastname\": \"" + lastName + "\"}";
     int httpResponseCode = http.POST(httpRequestData);
 
     if (httpResponseCode>0) {
