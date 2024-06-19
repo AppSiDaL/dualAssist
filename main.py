@@ -171,14 +171,14 @@ def insertar_dato_salida(numeroControl, fecha, hora_actual):
     cursor = conexion.cursor()
     # Insertar el registro de salida del alumno
     insert_query = (
-        "INSERT INTO asistencia (numero_control,fecha,hora_salida) VALUES (%s,%s, %s)"
+        "UPDATE asistencia SET hora_salida = %s WHERE numero_control = %s AND fecha = %s"
     )
     cursor.execute(
         insert_query,
         (
+            str(hora_actual),
             numeroControl,
             str(fecha),
-            str(hora_actual),
         ),
     )
     conexion.commit()
