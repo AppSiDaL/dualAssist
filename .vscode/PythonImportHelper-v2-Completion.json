@@ -1,0 +1,201 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "psycopg2",
+        "description": "psycopg2",
+        "detail": "psycopg2",
+        "documentation": {}
+    },
+    {
+        "label": "BaseHTTPMiddleware",
+        "importPath": "starlette.middleware.base",
+        "description": "starlette.middleware.base",
+        "isExtraImport": true,
+        "detail": "starlette.middleware.base",
+        "documentation": {}
+    },
+    {
+        "label": "Item",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class Item(BaseModel):\n    lastname: str\n# Función para conectarnos a la base de datos\ndef conectar_bd():\n    cnx = psycopg2.connect(\n        host=os.environ.get(\"DB_HOST\"),\n        port=os.environ.get(\"DB_PORT\"),\n        database=os.environ.get(\"DB_NAME\"),\n        user=os.environ.get(\"DB_USER\"),\n        password=os.environ.get(\"DB_PASSWORD\"),",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "CustomLoggerMiddleware",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class CustomLoggerMiddleware(BaseHTTPMiddleware):\n    async def dispatch(self, request: Request, call_next):\n        # Capturar el tipo de petición y la ruta\n        method = request.method\n        url = str(request.url)\n        # Leer el cuerpo de la petición. Nota: Esto requiere leer el stream de la petición, lo cual puede consumir el stream.\n        # Es necesario hacerlo asíncronamente y luego reconstruir el cuerpo para que la petición pueda continuar normalmente.\n        body_bytes = await request.body()\n        body = body_bytes.decode('utf-8')  # Asumiendo que el cuerpo es texto, ajusta la decodificación según sea necesario.\n        # Imprimir los detalles",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "conectar_bd",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def conectar_bd():\n    cnx = psycopg2.connect(\n        host=os.environ.get(\"DB_HOST\"),\n        port=os.environ.get(\"DB_PORT\"),\n        database=os.environ.get(\"DB_NAME\"),\n        user=os.environ.get(\"DB_USER\"),\n        password=os.environ.get(\"DB_PASSWORD\"),\n    )\n    return cnx\nfrom fastapi import FastAPI, Request",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_entrada",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def consultar_entrada(numeroControl):\n    conexion = conectar_bd()\n    cursor = conexion.cursor()\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Calcular la hora 30 minutos antes\n    hora_inicio = (datetime.now() - timedelta(minutes=30)).time()\n    # Consultar si el alumno ya registro asistencia\n    query = \"\"\"\n    SELECT * FROM asistencia",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_entrada_hoy",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def consultar_entrada_hoy(numeroControl):\n    conexion = conectar_bd()\n    cursor = conexion.cursor()\n    hoy = datetime.now().date()\n    # Consultar si el alumno ya registro asistencia hoy\n    query = \"\"\"\n    SELECT * FROM asistencia\n    WHERE numero_control = %s AND fecha = %s\n    \"\"\"\n    cursor.execute(",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "insertar_dato_entrada",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def insertar_dato_entrada(numeroControl, fecha, hora_actual):\n    conexion = conectar_bd()\n    cursor = conexion.cursor()\n    # Insertar el registro de asistencia del alumno\n    insert_query = (\n        \"INSERT INTO asistencia (numero_control,fecha,hora_entrada) VALUES (%s,%s, %s)\"\n    )\n    cursor.execute(\n        insert_query,\n        (",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "insertar_dato_salida",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def insertar_dato_salida(numeroControl, fecha, hora_actual):\n    conexion = conectar_bd()\n    cursor = conexion.cursor()\n    # Insertar el registro de salida del alumno\n    insert_query = (\n        \"UPDATE asistencia SET hora_salida = %s WHERE numero_control = %s AND fecha = %s\"\n    )\n    cursor.execute(\n        insert_query,\n        (",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI()\n# Añadir el middleware personalizado a la aplicación\napp.add_middleware(CustomLoggerMiddleware)\n@app.get(\"/\")\nasync def read_root():\n    return {\"Hello\": \"World\"}\n# Creamos la aplicación FastAPI\n# Obtenemos las variables de entorno\nHOST = os.getenv(\"HOST\")\nUSER = os.getenv(\"USER\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "HOST",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "HOST = os.getenv(\"HOST\")\nUSER = os.getenv(\"USER\")\nPASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "USER",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "USER = os.getenv(\"USER\")\nPASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "PASSWORD",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "PASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "PORT",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "PORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios\n    numeroControl = item.lastname.strip()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "DATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios\n    numeroControl = item.lastname.strip()\n    # Consultamos si el alumno ya registro asistencia antes",
+        "detail": "main",
+        "documentation": {}
+    }
+]

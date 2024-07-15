@@ -37,9 +37,37 @@ def conectar_bd():
     )
     return cnx
 
+from fastapi import FastAPI, Request
+from starlette.middleware.base import BaseHTTPMiddleware
 
-# Creamos la aplicación FastAPI
+class CustomLoggerMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # Capturar el tipo de petición y la ruta
+        method = request.method
+        url = str(request.url)
+
+        # Leer el cuerpo de la petición. Nota: Esto requiere leer el stream de la petición, lo cual puede consumir el stream.
+        # Es necesario hacerlo asíncronamente y luego reconstruir el cuerpo para que la petición pueda continuar normalmente.
+        body_bytes = await request.body()
+        body = body_bytes.decode('utf-8')  # Asumiendo que el cuerpo es texto, ajusta la decodificación según sea necesario.
+
+        # Imprimir los detalles
+        print(f"Petición: {method} {url}")
+        print(f"Cuerpo de la petición: {body}")
+
+        # Continuar con el procesamiento normal de la petición
+        response = await call_next(request)
+        return response
+
 app = FastAPI()
+
+# Añadir el middleware personalizado a la aplicación
+app.add_middleware(CustomLoggerMiddleware)
+
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
+# Creamos la aplicación FastAPI
 # Obtenemos las variables de entorno
 HOST = os.getenv("HOST")
 USER = os.getenv("USER")
