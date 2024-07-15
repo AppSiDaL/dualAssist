@@ -153,7 +153,18 @@ void loop() {
     HTTPClient http;
     http.begin("https://dualassist.onrender.com/"); //Specify the URL
     http.addHeader("Content-Type", "application/json");
-    String httpRequestData = "{\"lastname\": \"" + lastName + "\"}";
+        String lastNameEscaped = "";
+    for (int i = 0; i < lastName.length(); i++) {
+      char c = lastName.charAt(i);
+      // Escapa caracteres especiales aquí, como comillas dobles.
+      if (c == '\"') {
+        lastNameEscaped += "\\\"";
+      } else {
+        lastNameEscaped += c;
+      }
+    }
+
+    String httpRequestData = "{\"lastname\": \"" + lastNameEscaped + "\"}";
     int httpResponseCode = http.POST(httpRequestData);
 
     if (httpResponseCode>0) {
