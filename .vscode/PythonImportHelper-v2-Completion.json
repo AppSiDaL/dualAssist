@@ -149,7 +149,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def get_all_datos():\n    conexion = conectar_bd()\n    cursor = conexion.cursor()\n    # Consultar todos los registros de asistencia\n    query = \"\"\"\n    SELECT * FROM asistencia\n    \"\"\"\n    cursor.execute(query)\n    resultado = cursor.fetchall()\n    cursor.close()",
+        "peekOfCode": "def get_all_datos():\n    conexion = conectar_bd()\n    cursor = conexion.cursor()\n    query = \"SELECT * FROM asistencia\"\n    cursor.execute(query)\n    column_names = [desc[0] for desc in cursor.description]\n    resultado = cursor.fetchall()\n    datos = [dict(zip(column_names, row)) for row in resultado]\n    cursor.close()\n    conexion.close()",
         "detail": "main",
         "documentation": {}
     },

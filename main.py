@@ -218,13 +218,13 @@ def insertar_dato_salida(numeroControl, fecha, hora_actual):
 def get_all_datos():
     conexion = conectar_bd()
     cursor = conexion.cursor()
-    # Consultar todos los registros de asistencia
-    query = """
-    SELECT * FROM asistencia
-    """
+    query = "SELECT * FROM asistencia"
     cursor.execute(query)
+    column_names = [desc[0] for desc in cursor.description]
     resultado = cursor.fetchall()
+
+    datos = [dict(zip(column_names, row)) for row in resultado]
 
     cursor.close()
     conexion.close()
-    return resultado
+    return datos
