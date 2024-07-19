@@ -66,7 +66,8 @@ app.add_middleware(CustomLoggerMiddleware)
 
 @app.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    datos=get_all_datos()
+    return datos
 # Creamos la aplicación FastAPI
 # Obtenemos las variables de entorno
 HOST = os.getenv("HOST")
@@ -212,3 +213,18 @@ def insertar_dato_salida(numeroControl, fecha, hora_actual):
     conexion.commit()
     cursor.close()
     conexion.close()
+
+
+def get_all_datos():
+    conexion = conectar_bd()
+    cursor = conexion.cursor()
+    # Consultar todos los registros de asistencia
+    query = """
+    SELECT * FROM asistencia
+    """
+    cursor.execute(query)
+    resultado = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+    return resultado

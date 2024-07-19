@@ -145,11 +145,20 @@
         "documentation": {}
     },
     {
+        "label": "get_all_datos",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def get_all_datos():\n    conexion = conectar_bd()\n    cursor = conexion.cursor()\n    # Consultar todos los registros de asistencia\n    query = \"\"\"\n    SELECT * FROM asistencia\n    \"\"\"\n    cursor.execute(query)\n    resultado = cursor.fetchall()\n    cursor.close()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "app",
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\n# Añadir el middleware personalizado a la aplicación\napp.add_middleware(CustomLoggerMiddleware)\n@app.get(\"/\")\nasync def read_root():\n    return {\"Hello\": \"World\"}\n# Creamos la aplicación FastAPI\n# Obtenemos las variables de entorno\nHOST = os.getenv(\"HOST\")\nUSER = os.getenv(\"USER\")",
+        "peekOfCode": "app = FastAPI()\n# Añadir el middleware personalizado a la aplicación\napp.add_middleware(CustomLoggerMiddleware)\n@app.get(\"/\")\nasync def read_root():\n    datos=get_all_datos()\n    return datos\n# Creamos la aplicación FastAPI\n# Obtenemos las variables de entorno\nHOST = os.getenv(\"HOST\")",
         "detail": "main",
         "documentation": {}
     },
