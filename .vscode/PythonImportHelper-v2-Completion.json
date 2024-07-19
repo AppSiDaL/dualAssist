@@ -158,7 +158,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "HOST = os.getenv(\"HOST\")\nUSER = os.getenv(\"USER\")\nPASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()",
+        "peekOfCode": "HOST = os.getenv(\"HOST\")\nUSER = os.getenv(\"USER\")\nPASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/{numeroControl}\")  # Usar el parámetro de la ruta\nasync def root(numeroControl: str):  # El número de control se obtiene directamente de la URL\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()",
         "detail": "main",
         "documentation": {}
     },
@@ -167,7 +167,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "USER = os.getenv(\"USER\")\nPASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()",
+        "peekOfCode": "USER = os.getenv(\"USER\")\nPASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/{numeroControl}\")  # Usar el parámetro de la ruta\nasync def root(numeroControl: str):  # El número de control se obtiene directamente de la URL\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()",
         "detail": "main",
         "documentation": {}
     },
@@ -176,7 +176,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "PASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios",
+        "peekOfCode": "PASSWORD = os.getenv(\"PASSWORD\")\nPORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/{numeroControl}\")  # Usar el parámetro de la ruta\nasync def root(numeroControl: str):  # El número de control se obtiene directamente de la URL\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios",
         "detail": "main",
         "documentation": {}
     },
@@ -185,7 +185,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "PORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios\n    numeroControl = item.lastname.strip()",
+        "peekOfCode": "PORT = os.getenv(\"PORT\")\nDATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/{numeroControl}\")  # Usar el parámetro de la ruta\nasync def root(numeroControl: str):  # El número de control se obtiene directamente de la URL\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios\n    numeroControl = numeroControl.strip()",
         "detail": "main",
         "documentation": {}
     },
@@ -194,7 +194,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "DATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/\")\nasync def root(item: Item):\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios\n    numeroControl = item.lastname.strip()\n    # Consultamos si el alumno ya registro asistencia antes",
+        "peekOfCode": "DATABASE = os.getenv(\"DATABASE\")\n# Definimos la ruta raíz de la API\n@app.post(\"/{numeroControl}\")  # Usar el parámetro de la ruta\nasync def root(numeroControl: str):  # El número de control se obtiene directamente de la URL\n    # Obtenemos la fecha y hora actual\n    hoy = datetime.now().date()\n    hora_actual = datetime.now().time()\n    # Obtenemos el número de control del alumno y recortamos los espacios\n    numeroControl = numeroControl.strip()\n    # Consultamos si el alumno ya registro asistencia antes",
         "detail": "main",
         "documentation": {}
     }

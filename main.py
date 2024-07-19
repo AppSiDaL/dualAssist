@@ -77,13 +77,13 @@ DATABASE = os.getenv("DATABASE")
 
 
 # Definimos la ruta raíz de la API
-@app.post("/")
-async def root(item: Item):
+@app.post("/{numeroControl}")  # Usar el parámetro de la ruta
+async def root(numeroControl: str):  # El número de control se obtiene directamente de la URL
     # Obtenemos la fecha y hora actual
     hoy = datetime.now().date()
     hora_actual = datetime.now().time()
     # Obtenemos el número de control del alumno y recortamos los espacios
-    numeroControl = item.lastname.strip()
+    numeroControl = numeroControl.strip()
     # Consultamos si el alumno ya registro asistencia antes
     resultado = consultar_entrada(numeroControl)
     # Si el alumno ya registro asistencia antes
